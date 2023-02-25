@@ -1,5 +1,7 @@
 #include <SFML/Graphics.hpp>
 #include <cstdint>
+#include "../utility/fpsCounter.hpp"
+
 
 class Game : 
 public sf::RenderWindow 
@@ -9,10 +11,16 @@ public:
         const sf::ContextSettings &settings = sf::ContextSettings());
     ~Game();
 
-    virtual void init();
-    virtual void update();
     
     void run();
+
 private:
+    FpsCounter counter;
+
+    virtual void init();
+    virtual void update();
+
     virtual void handleEvents();
+
+    virtual void drawAll();
 };

@@ -1,5 +1,8 @@
 SRC = ./src/*.cpp \
-	  ./src/game/*.cpp
+	  ./src/game/*.cpp \
+	  ./src/utility/*.cpp \
+	  ./src/explosion/*.cpp \
+	  ./src/physics/*.cpp
 INC = ./include
 BIN = ./bin
 CC = g++
