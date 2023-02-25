@@ -1,6 +1,11 @@
 #include "../../include/physics/physicalObject.hpp"
 
 
+void PhysicalObject::setGlobalDelay(float *globalDelay)
+{
+    PhysicalObject::globalDelay = globalDelay;
+}
+
 void PhysicalObject::setPosition(const sf::Vector2f &vec)
 {
     position = vec;
@@ -21,9 +26,9 @@ void PhysicalObject::setMass(float mass)
     this->mass = mass;
 }
 
-void PhysicalObject::moveObject(const sf::Vector2f &vec)
+void PhysicalObject::setElasticity(float elasticity)
 {
-    position += vec;
+    this->elasticity = elasticity;
 }
 
 sf::Vector2f PhysicalObject::getPosition()
@@ -44,4 +49,14 @@ sf::Vector2f PhysicalObject::getAcceleration()
 float PhysicalObject::getMass()
 {
     return mass;
+}
+
+float PhysicalObject::getElasticity()
+{
+    return elasticity;
+}
+
+void PhysicalObject::moveObject(const sf::Vector2f &vec)
+{
+    position += vec;
 }

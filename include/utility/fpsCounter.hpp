@@ -1,3 +1,4 @@
+#pragma once
 #include <SFML/Graphics.hpp>
 
 class FpsCounter : public sf::Text
@@ -8,7 +9,7 @@ public:
 
     void saveTime();
 
-    double getDrawTime();
+    float getDrawTime();
 
 private:
     sf::Font font;
@@ -18,5 +19,5 @@ private:
     sf::Time previousTime;
     sf::Time currentTime;
 
-    double drawTime;
+    float drawTime;
 };

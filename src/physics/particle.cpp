@@ -1,5 +1,5 @@
 #include "../../include/physics/particle.hpp"
-
+#include "../../include/utility/defines.hpp"
 
 Particle::Particle(const sf::Vector2f &position, float radius, int pointCount)
 {
@@ -26,13 +26,13 @@ void Particle::setPosition(const sf::Vector2f &vec)
 
 void Particle::moveObject(const sf::Vector2f &vec)
 {
-    PhysicalObject::moveObject(vec);
-    body.CircleShape::move(vec);
+    PhysicalObject::moveObject({vec.x*(*globalDelay), vec.y*(*globalDelay)});
+    body.move({vec.x*(*globalDelay), vec.y*(*globalDelay)});
 }
 
 void Particle::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
-
+    target.draw(body, states);
 }
 
 void Particle::update()

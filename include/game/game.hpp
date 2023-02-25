@@ -1,7 +1,8 @@
+#pragma once
 #include <SFML/Graphics.hpp>
 #include <cstdint>
 #include "../utility/fpsCounter.hpp"
-#include "../physics/particle.hpp"
+#include "../explosion/Explosion.hpp"
 
 
 class Game : 
@@ -17,6 +18,10 @@ public:
 
 private:
     FpsCounter counter;
+    float *delay;
+
+    std::vector<PhysicalObject *> objects;
+    Explosion explosion;
 
     virtual void update();
 

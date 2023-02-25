@@ -27,13 +27,13 @@ void FpsCounter::saveTime()
 {
     currentTime = clock.getElapsedTime();
     drawTime = (currentTime.asSeconds() - previousTime.asSeconds());
-    double fps = 1.f / drawTime;
+    float fps = 1.f / drawTime;
     previousTime = currentTime;
 
     setString("delay[s]:"+std::to_string(drawTime)+"\nfps: "+std::to_string(fps));
 }
 
-double FpsCounter::getDrawTime()
+float FpsCounter::getDrawTime()
 {
     return drawTime;
 }
