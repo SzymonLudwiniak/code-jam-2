@@ -2,10 +2,8 @@
 
 
 Particle::Particle(const sf::Vector2f &position, float radius, int pointCount)
-: sf::CircleShape(radius, pointCount)
 {
-    PhysicalObject::setRealPosition(position);
-    sf::CircleShape::setPosition(position);
+    setPosition(position);
     setMass(1.0);
 }
 
@@ -20,19 +18,24 @@ sf::Vector2f Particle::push(const sf::Vector2f &force)
     return getVelocity();
 }
 
-void Particle::setRealPosition(const sf::Vector2f &vec)
+void Particle::setPosition(const sf::Vector2f &vec)
 {
-    PhysicalObject::setRealPosition(vec);
-    sf::CircleShape::setPosition(vec);
+    PhysicalObject::setPosition(vec);
+    body.setPosition(vec);
 }
 
 void Particle::moveObject(const sf::Vector2f &vec)
 {
-    PhysicalObject::moveObject(velocity);
-    sf::CircleShape::move(velocity);
+    PhysicalObject::moveObject(vec);
+    body.CircleShape::move(vec);
+}
+
+void Particle::draw(sf::RenderTarget &target, sf::RenderStates states) const
+{
+
 }
 
 void Particle::update()
 {
-    
+    moveObject(getVelocity());
 }

@@ -1,9 +1,9 @@
 #include "../../include/physics/physicalObject.hpp"
 
 
-void PhysicalObject::setRealPosition(const sf::Vector2f &vec)
+void PhysicalObject::setPosition(const sf::Vector2f &vec)
 {
-    realPosition = vec;
+    position = vec;
 }
 
 void PhysicalObject::setVelocity(const sf::Vector2f &vec)
@@ -23,12 +23,12 @@ void PhysicalObject::setMass(float mass)
 
 void PhysicalObject::moveObject(const sf::Vector2f &vec)
 {
-    realPosition += vec;
+    position += vec;
 }
 
-sf::Vector2f PhysicalObject::getRealPosition()
+sf::Vector2f PhysicalObject::getPosition()
 {
-    return realPosition;
+    return position;
 }
 
 sf::Vector2f PhysicalObject::getVelocity()
