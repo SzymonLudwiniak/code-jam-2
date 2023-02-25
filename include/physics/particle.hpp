@@ -1,17 +1,17 @@
 #include <SFML/Graphics.hpp>
 
+#include "physicalObject.hpp"
 
-class Particle : public sf::CircleShape
+
+class Particle : public sf::CircleShape, public PhysicalObject
 {
 public:
-    Particle();
+    Particle(const sf::Vector2f &position, float radius = 0.f, int pointCount = 30);
     ~Particle();
 
-    sf::Vector2f push(sf::Vector2f &force);
+    virtual sf::Vector2f push(const sf::Vector2f &force);
+    virtual void setRealPosition(const sf::Vector2f &vec);
+    virtual void moveObject(const sf::Vector2f &vec);
 
-private:
-    sf::Vector2f velocity;
-    sf::Vector2f acceleration;
-
-    float mass;
+    void update();
 };

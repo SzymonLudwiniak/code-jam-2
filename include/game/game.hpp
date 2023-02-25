@@ -1,6 +1,7 @@
 #include <SFML/Graphics.hpp>
 #include <cstdint>
 #include "../utility/fpsCounter.hpp"
+#include "../physics/particle.hpp"
 
 
 class Game : 
@@ -17,7 +18,6 @@ public:
 private:
     FpsCounter counter;
 
-    virtual void init();
     virtual void update();
 
     virtual void handleEvents();

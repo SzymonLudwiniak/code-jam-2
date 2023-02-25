@@ -1,10 +1,14 @@
+#include <time.h>
+#include <iostream>
+
 #include "../../include/game/game.hpp"
+
 
 Game::Game(sf::VideoMode mode, const std::string &title,  unsigned int style, 
             const sf::ContextSettings &settings) 
 : sf::RenderWindow(mode, title, style, settings)
 {
-    setFramerateLimit(60);
+    srand(time(NULL));
 }
 
 Game::~Game()
@@ -12,20 +16,16 @@ Game::~Game()
     
 }
 
-void Game::init()
-{
-
-}
-
 void Game::update()
 {
+    // physical state updates here //
 
+    ///////////////////
     counter.saveTime();
 }
 
 void Game::run()
 {
-    init();
 
     while(isOpen())
     {
@@ -49,6 +49,15 @@ void Game::handleEvents()
             case sf::Event::Closed:
                 this->close();
                 break;
+            case sf::Event::KeyPressed:
+                if(event.key.code == sf::Keyboard::Key::Space)
+                {
+
+                }
+                else if(event.key.code == sf::Keyboard::Key::Escape)
+                {
+                    this->close();
+                }
             default:
                 break;
         }
@@ -57,5 +66,8 @@ void Game::handleEvents()
 
 void Game::drawAll()
 {
+    // draw here //
+
+    //////////////
     draw(counter);
 }
