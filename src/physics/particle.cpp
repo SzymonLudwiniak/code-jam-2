@@ -5,6 +5,8 @@ Particle::Particle(const sf::Vector2f &position, float radius, int pointCount)
 {
     setPosition(position);
     setMass(1.0);
+    body.setPosition(position);
+    body.setRadius(radius);
 }
 
 Particle::~Particle()
@@ -28,6 +30,11 @@ void Particle::moveObject(const sf::Vector2f &vec)
 {
     PhysicalObject::moveObject({vec.x*(*globalDelay), vec.y*(*globalDelay)});
     body.move({vec.x*(*globalDelay), vec.y*(*globalDelay)});
+}
+
+float Particle::getCollisionRadius()
+{
+    return body.getRadius();
 }
 
 void Particle::draw(sf::RenderTarget &target, sf::RenderStates states) const

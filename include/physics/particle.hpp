@@ -14,6 +14,8 @@ public:
     virtual void setPosition(const sf::Vector2f &vec);
     virtual void moveObject(const sf::Vector2f &vec);
 
+    virtual float getCollisionRadius();
+
     virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const;
 
     void update();

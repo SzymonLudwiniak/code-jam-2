@@ -71,7 +71,7 @@ void Game::handleEvents()
             case sf::Event::MouseButtonPressed:
                 if(event.mouseButton.button == sf::Mouse::Left)
                 {
-                    sf::Vector2i mPos = sf::Mouse::getPosition();
+                    sf::Vector2i mPos = sf::Mouse::getPosition(*this);
                     explosion.setPosition(sf::Vector2f(mPos));
                     explosion.igniteExplosion(objects);
                 }

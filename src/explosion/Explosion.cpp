@@ -24,7 +24,16 @@ Explosion::~Explosion()
 
 void Explosion::update()
 {
-    cooldown -= *globalDelay;
+    if(cooldown > 0)
+        cooldown -= *globalDelay;
+
+    if(cooldown > 0.02)
+    {
+        for(auto &particle : explosionParticles)
+        {
+            particle.update();
+        }
+    }
 }
 
 
@@ -37,7 +46,7 @@ void Explosion::igniteExplosion(std::vector<PhysicalObject *> &objects)
     for(auto &particle : explosionParticles)
     {
         particle.setPosition(position);
-        particle.push({float(rand()%50-100), float(rand()%50-100)});
+        particle.push({float(rand()%100-50)*10, float(rand()%100-50)*10});
     }
 }
 

@@ -19,6 +19,8 @@ public:
     float getMass();
     float getElasticity();
 
+    virtual float getCollisionRadius() = 0;
+
     virtual void moveObject(const sf::Vector2f &vec);
     virtual sf::Vector2f push(const sf::Vector2f &force) = 0;
 protected:
