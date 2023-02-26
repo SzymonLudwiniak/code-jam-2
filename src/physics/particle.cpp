@@ -7,6 +7,8 @@ Particle::Particle(const sf::Vector2f &position, float radius, int pointCount)
     setMass(1.0);
     body.setPosition(position);
     body.setRadius(radius);
+    body.setFillColor(sf::Color(rand()%255, rand()%255, rand()%255));
+    body.setOrigin(radius, radius);
 }
 
 Particle::~Particle()

@@ -2,7 +2,7 @@
 #include <SFML/Graphics.hpp>
 
 
-class PhysicalObject
+class PhysicalObject : public sf::Drawable
 {
 public:
     static void setGlobalDelay(float *globalDelay);
@@ -15,7 +15,9 @@ public:
 
     sf::Vector2f getPosition();
     sf::Vector2f getVelocity();
+    sf::Vector2f getRelativeVelocity();
     sf::Vector2f getAcceleration();
+    
     float getMass();
     float getElasticity();
 
@@ -23,6 +25,10 @@ public:
 
     virtual void moveObject(const sf::Vector2f &vec);
     virtual sf::Vector2f push(const sf::Vector2f &force) = 0;
+    virtual void update() = 0;
+
+    virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const;
+
 protected:
     static inline float const *globalDelay = nullptr;
 

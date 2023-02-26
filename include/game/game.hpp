@@ -3,6 +3,8 @@
 #include <cstdint>
 #include "../utility/fpsCounter.hpp"
 #include "../explosion/Explosion.hpp"
+#include "../physics/collisionHandler.hpp"
+#include "../physics/boundaryGuard.hpp"
 
 
 class Game : 
@@ -22,6 +24,8 @@ private:
 
     std::vector<PhysicalObject *> objects;
     Explosion explosion;
+    CollisionHandler handler;
+    BoundaryGuard boundGuard;
 
     virtual void update();
 

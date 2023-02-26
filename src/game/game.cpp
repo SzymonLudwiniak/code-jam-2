@@ -17,6 +17,13 @@ Game::Game(sf::VideoMode mode, const std::string &title,  unsigned int style,
     PhysicalObject::setGlobalDelay(delay);
 
     explosion.setForce(10);
+
+    objects.push_back(new Particle({400.f, 390.f}, 10));
+    objects.push_back(new Particle({1000.f, 400.f}, 10));
+    objects[1]->setMass(15);
+
+    objects[0]->push({50, 0});
+    objects[1]->push({-750, 0});
 }
 
 Game::~Game()
@@ -27,6 +34,13 @@ Game::~Game()
 void Game::update()
 {
     // physical state updates here //
+    handler.handleCollisions(objects);
+    boundGuard.checkBounds(objects);
+
+    for(auto &object : objects)
+    {
+        object->update();
+    }
     explosion.update();
     ///////////////////
     *delay = counter.getDrawTime();
@@ -85,6 +99,10 @@ void Game::handleEvents()
 void Game::drawAll()
 {
     // draw here //
+    for(auto &object : objects)
+    {
+        draw(*object);
+    }
     draw(explosion);
     //////////////
     draw(counter);

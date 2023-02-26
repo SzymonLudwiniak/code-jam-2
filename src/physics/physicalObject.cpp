@@ -41,6 +41,11 @@ sf::Vector2f PhysicalObject::getVelocity()
     return velocity;
 }
 
+sf::Vector2f PhysicalObject::getRelativeVelocity()
+{
+    return velocity*(*globalDelay);
+}
+
 sf::Vector2f PhysicalObject::getAcceleration()
 {
     return acceleration;
@@ -59,4 +64,9 @@ float PhysicalObject::getElasticity()
 void PhysicalObject::moveObject(const sf::Vector2f &vec)
 {
     position += vec;
+}
+
+void PhysicalObject::draw(sf::RenderTarget &target, sf::RenderStates states) const
+{
+    
 }

@@ -4,7 +4,7 @@
 #include "physicalObject.hpp"
 
 
-class Particle : public sf::Drawable, public PhysicalObject
+class Particle : public PhysicalObject
 {
 public:
     Particle(const sf::Vector2f &position, float radius = 0.f, int pointCount = 30);
