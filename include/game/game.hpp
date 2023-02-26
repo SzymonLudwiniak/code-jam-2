@@ -22,12 +22,18 @@ public:
 private:
     FpsCounter counter;
     ScoreCounter score;
+    sf::Text popUp;
+    sf::Font font;
+    sf::SoundBuffer buffer;
+    sf::Sound sound;
     float *delay;
 
     std::vector<PhysicalObject *> objects;
     Explosion explosion;
     CollisionHandler handler;
     BoundaryGuard boundGuard;
+
+    bool playing;
 
 
     virtual void update();
