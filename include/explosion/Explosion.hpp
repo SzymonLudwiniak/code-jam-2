@@ -15,7 +15,7 @@ public:
 
     void update();
 
-    void igniteExplosion(std::vector<PhysicalObject *> &objects);
+    bool igniteExplosion(std::vector<PhysicalObject *> &objects);
 
     void setForce(float force);
     void setPosition(const sf::Vector2f &vec);
@@ -32,6 +32,7 @@ private:
     sf::Vector2f position;
 
     float force;
+    float radius = 100.f;
 
     std::vector<Particle> explosionParticles;
 

@@ -2,32 +2,37 @@
 #include <iostream>
 
 #include "../../include/game/game.hpp"
+#include "../../include/utility/defines.hpp"
 
 
 Game::Game(sf::VideoMode mode, const std::string &title,  unsigned int style, 
             const sf::ContextSettings &settings) 
-: sf::RenderWindow(mode, title, style, settings)
+: sf::RenderWindow(mode, title, style, settings), 
+    explosion(), handler(), boundGuard(), objects(), counter(), score()
 {
     //setFramerateLimit(60);
     delay = new float;
+
+    counter.setPosition({0.f, 0.f});
+    score.setPosition({0.f, 50.f});
 
     Explosion::setGlobalDelay(delay);
     Explosion::setSoundBuffer("./resources/audio/fart.wav");
     PhysicalObject::setGlobalDelay(delay);
 
-    explosion = Explosion();
-    explosion.setForce(200);
+    explosion.setForce(50);
 
-    handler = CollisionHandler();
-    boundGuard = BoundaryGuard();
 
     objects = std::vector<PhysicalObject *>();
 
-    for(int i = 0; i < 300; i++)
+    for(int y = 0; y < 10; y++)
     {
-        objects.push_back(new Particle({rand()%1000+50, rand()%600+50}, 5));
-        objects.back()->setMass(rand()%10+1);
-        objects.back()->push({rand()%500, rand()%500});
+        for(int x = 0; x < 30; x++)
+        {
+            objects.push_back(new Particle({x*50+100+y, y*30+200}, rand()%10+1));
+            objects.back()->setMass(rand()%10+1);
+            objects.back()->setAcceleration({0.f, G});
+        }
     }
 }
 
@@ -97,7 +102,8 @@ void Game::handleEvents()
                 {
                     sf::Vector2i mPos = sf::Mouse::getPosition(*this);
                     explosion.setPosition(sf::Vector2f(mPos));
-                    explosion.igniteExplosion(objects);
+                    if(explosion.igniteExplosion(objects))
+                        score.incrementScore();
                 }
                 break;
             default:
@@ -115,5 +121,6 @@ void Game::drawAll()
     }
     draw(explosion);
     //////////////
+    draw(score);
     draw(counter);
 }

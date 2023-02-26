@@ -21,5 +21,6 @@ public:
     void update();
 
 private:
+    friend class Explosion;
     sf::CircleShape body;
 };

@@ -1,3 +1,5 @@
+#include <cmath>
+
 #include "../../include/explosion/Explosion.hpp"
 
 
@@ -37,29 +39,32 @@ void Explosion::update()
 }
 
 
-void Explosion::igniteExplosion(std::vector<PhysicalObject *> &objects)
+bool Explosion::igniteExplosion(std::vector<PhysicalObject *> &objects)
 {
     if(cooldown > 0.02)
-        return;
+        return false;
     cooldown = 1.1;
     sound.play();
     for(auto &particle : explosionParticles)
     {
+        particle.setVelocity({0.f, 0.f});
         particle.setPosition(position);
         particle.push({float(rand()%100-50)*10, float(rand()%100-50)*10});
+        particle.body.setFillColor(sf::Color(rand()%255, rand()%100, rand()%100));
     }
 
     for(auto &obj : objects)
     {
         auto objPos = obj->getPosition();
-        float distance = (objPos.x-position.x)*(objPos.x-position.x)+(objPos.y-position.y)*(objPos.y-position.y);
+        float distance = sqrtf((objPos.x-position.x)*(objPos.x-position.x)+(objPos.y-position.y)*(objPos.y-position.y));
 
-        if(distance < force*force)
+        if(distance < radius)
         {
-            auto vec = objPos - position;
-            obj->push(vec*force);
+            auto normal = sf::Vector2f(objPos.x-position.x, objPos.y-position.y) / distance;
+            obj->push(100.f*normal*force*radius/distance);
         }
     }
+    return true;
 }
 
 void Explosion::setForce(float force)

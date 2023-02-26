@@ -47,4 +47,5 @@ void Particle::draw(sf::RenderTarget &target, sf::RenderStates states) const
 void Particle::update()
 {
     moveObject(getVelocity());
+    setVelocity((getVelocity()+getAcceleration()*(*globalDelay))*float(FRIC));
 }
