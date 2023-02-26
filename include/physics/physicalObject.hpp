@@ -24,7 +24,7 @@ public:
     virtual float getCollisionRadius() = 0;
 
     virtual void moveObject(const sf::Vector2f &vec);
-    virtual sf::Vector2f push(const sf::Vector2f &force) = 0;
+    virtual sf::Vector2f push(const sf::Vector2f &force);
     virtual void update() = 0;
 
     virtual void draw(sf::RenderTarget &target, sf::RenderStates states) const;
@@ -33,10 +33,10 @@ protected:
     static inline float const *globalDelay = nullptr;
 
 private:
-    sf::Vector2f position;
-    sf::Vector2f velocity;
-    sf::Vector2f acceleration;
+    sf::Vector2f position = {0.f, 0.f};
+    sf::Vector2f velocity = {0.f, 0.f};
+    sf::Vector2f acceleration = {0.f, 0.f};
 
-    float mass;
-    float elasticity;
+    float mass = 1.f;
+    float elasticity = 1.f;
 };

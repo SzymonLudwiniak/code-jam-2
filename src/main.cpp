@@ -4,6 +4,7 @@
 
 int main()
 {
+    srand(time(NULL));
     Game game(sf::VideoMode(SCREENWIDTH, SCREENHEIGHT), "code jam");
 
     game.run();

@@ -1,4 +1,5 @@
 #include <cmath>
+#include <algorithm>
 
 #include "../../include/physics/collisionHandler.hpp"
 
@@ -29,23 +30,62 @@ std::vector<std::pair<PhysicalObject*, PhysicalObject*>> CollisionHandler::naive
 {
     auto pairs = std::vector<std::pair<PhysicalObject*, PhysicalObject*>>();
 
-    for(int i = 0; i < objects.size(); i++)
-    {
-        for(int j = i; j < objects.size(); j++)
-        {
-            if(objects[i] == objects[j])
-                continue;
+    // for(int i = 0; i < objects.size(); i++)
+    // {
+    //     for(int j = 0; j < objects.size(); j++)
+    //     {
+    //         // if(objects[i] == objects[j])
+    //         //     continue;
             
-            auto posi = objects[i]->getPosition() + objects[i]->getRelativeVelocity();
-            auto posj = objects[j]->getPosition() + objects[j]->getRelativeVelocity();
+    //         auto posi = objects[i]->getPosition() + objects[i]->getRelativeVelocity();
+    //         auto posj = objects[j]->getPosition() + objects[j]->getRelativeVelocity();
 
-            auto radi = objects[i]->getCollisionRadius();
-            auto radj = objects[i]->getCollisionRadius();
+    //         auto radi = objects[i]->getCollisionRadius();
+    //         auto radj = objects[i]->getCollisionRadius();
 
-            if((posi.x - posj.x)*(posi.x - posj.x) + (posi.y - posj.y)*(posi.y - posj.y) < (radi + radj)*(radi + radj))
+    //         if((posi.x - posj.x)*(posi.x - posj.x) + (posi.y - posj.y)*(posi.y - posj.y) < (radi + radj)*(radi + radj))
+    //         {
+    //             //pairs.push_back({objects[i], objects[j]});
+    //         }
+    //     }
+    // }
+    std::sort(objects.begin(), objects.end(), [](PhysicalObject* a, PhysicalObject* b){
+                                                    return a->getPosition().x > b->getPosition().x;
+                                                });
+
+    int start = 0;
+    int end = 0;
+
+    bool collision;
+
+    for(int i = 1; i < objects.size(); i++)
+    {
+        collision = false;
+
+        sf::Vector2f posi = objects[i]->getPosition() + objects[i]->getRelativeVelocity();
+        float radi = objects[i]->getCollisionRadius();
+
+        for(int j = start; j <= end; j++)
+        {
+            sf::Vector2f posj = objects[j]->getPosition() + objects[j]->getRelativeVelocity();
+            float radj = objects[j]->getCollisionRadius();
+
+            if(objects[j] != objects[i] && abs(posj.x - posi.x) < radj + radj)
             {
-                pairs.push_back({objects[i], objects[j]});
+                float distPow = (posi.x - posj.x)*(posi.x - posj.x) + (posi.y - posj.y)*(posi.y - posj.y);
+                if(distPow < (radi + radj)*(radi + radj))
+                {
+                    pairs.push_back({objects[i], objects[j]});
+                }
+                end = i;
+                collision = true;
             }
+        }
+
+        if(collision == false)
+        {
+            start = i;
+            end = i;
         }
     }
     return pairs;
@@ -53,7 +93,6 @@ std::vector<std::pair<PhysicalObject*, PhysicalObject*>> CollisionHandler::naive
 
 void CollisionHandler::performCollision(std::pair<PhysicalObject*, PhysicalObject*> &colliding)
 {
-
     sf::Vector2f v1;
     sf::Vector2f v2;
 
@@ -87,6 +126,8 @@ void CollisionHandler::performCollision(std::pair<PhysicalObject*, PhysicalObjec
     v2.x = tangent.x * dpTan2 + normal.x * p2;
     v2.y = tangent.y * dpTan2 + normal.y * p2;
 
-    colliding.first->setVelocity(v1);
-    colliding.second->setVelocity(v2);
+    float elasticity = (colliding.first->getElasticity() + colliding.second->getElasticity())/2;
+
+    colliding.first->setVelocity(v1*elasticity);
+    colliding.second->setVelocity(v2*elasticity);
 }

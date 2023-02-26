@@ -66,6 +66,11 @@ void PhysicalObject::moveObject(const sf::Vector2f &vec)
     position += vec;
 }
 
+sf::Vector2f PhysicalObject::push(const sf::Vector2f &force)
+{
+    velocity += force;
+}
+
 void PhysicalObject::draw(sf::RenderTarget &target, sf::RenderStates states) const
 {
     

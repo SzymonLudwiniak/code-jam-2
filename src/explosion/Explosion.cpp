@@ -48,6 +48,18 @@ void Explosion::igniteExplosion(std::vector<PhysicalObject *> &objects)
         particle.setPosition(position);
         particle.push({float(rand()%100-50)*10, float(rand()%100-50)*10});
     }
+
+    for(auto &obj : objects)
+    {
+        auto objPos = obj->getPosition();
+        float distance = (objPos.x-position.x)*(objPos.x-position.x)+(objPos.y-position.y)*(objPos.y-position.y);
+
+        if(distance < force*force)
+        {
+            auto vec = objPos - position;
+            obj->push(vec*force);
+        }
+    }
 }
 
 void Explosion::setForce(float force)

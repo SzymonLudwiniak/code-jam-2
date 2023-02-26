@@ -20,9 +20,9 @@ void BoundaryGuard::checkBounds(std::vector<PhysicalObject*> &objects)
         auto vel = obj->getRelativeVelocity();
         sf::Vector2f newVel = obj->getVelocity();
 
-        if(pos.x + vel.x < 0 || pos.x + vel.x > SCREENWIDTH)
+        if(pos.x + vel.x < obj->getCollisionRadius() || pos.x + vel.x > SCREENWIDTH - obj->getCollisionRadius())
             newVel.x *= -1;
-        if(pos.y + vel.y < 0 || pos.y + vel.y > SCREENHEIGHT)
+        if(pos.y + vel.y < obj->getCollisionRadius() || pos.y + vel.y > SCREENHEIGHT - obj->getCollisionRadius())
             newVel.y *= -1;
         
         obj->setVelocity(newVel);

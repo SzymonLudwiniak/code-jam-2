@@ -9,21 +9,26 @@ Game::Game(sf::VideoMode mode, const std::string &title,  unsigned int style,
 : sf::RenderWindow(mode, title, style, settings)
 {
     //setFramerateLimit(60);
-    srand(time(NULL));
     delay = new float;
 
     Explosion::setGlobalDelay(delay);
     Explosion::setSoundBuffer("./resources/audio/fart.wav");
     PhysicalObject::setGlobalDelay(delay);
 
-    explosion.setForce(10);
+    explosion = Explosion();
+    explosion.setForce(200);
 
-    objects.push_back(new Particle({400.f, 390.f}, 10));
-    objects.push_back(new Particle({1000.f, 400.f}, 10));
-    objects[1]->setMass(15);
+    handler = CollisionHandler();
+    boundGuard = BoundaryGuard();
 
-    objects[0]->push({50, 0});
-    objects[1]->push({-750, 0});
+    objects = std::vector<PhysicalObject *>();
+
+    for(int i = 0; i < 300; i++)
+    {
+        objects.push_back(new Particle({rand()%1000+50, rand()%600+50}, 5));
+        objects.back()->setMass(rand()%10+1);
+        objects.back()->push({rand()%500, rand()%500});
+    }
 }
 
 Game::~Game()
@@ -75,7 +80,12 @@ void Game::handleEvents()
             case sf::Event::KeyPressed:
                 if(event.key.code == sf::Keyboard::Key::Space)
                 {
-
+                    for(auto &obj : objects)
+                    {
+                        obj->setVelocity({0.f, 0.f});
+                        obj->setPosition({rand()%1000+50, rand()%600+50});
+                        obj->push({rand()%500, rand()%500});
+                    }
                 }
                 else if(event.key.code == sf::Keyboard::Key::Escape)
                 {
